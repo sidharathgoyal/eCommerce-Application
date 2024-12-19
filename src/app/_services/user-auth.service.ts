@@ -1,17 +1,25 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserAuthService {
+  constructor() {}
 
-  constructor() { }
-
-  public setRoles(roles:[]){
+  public setRoles(roles: []) {
     localStorage.setItem('roles', JSON.stringify(roles));
   }
 
-  public setToken(jwtToken:string){
+  public getRoles(): [] {
+    if (typeof localStorage !== 'undefined') {
+      const roles = localStorage.getItem('roles');
+      return roles ? JSON.parse(roles) : [];
+    }
+    return [];
+
+  }
+
+  public setToken(jwtToken: string) {
     localStorage.setItem('jwtToken', jwtToken);
   }
 
@@ -19,32 +27,21 @@ export class UserAuthService {
     return localStorage.getItem('jwtToken');
   }
 
-  public clear(){
+  public clear() {
     localStorage.clear();
   }
 
-  // public isLoggedIn(){
-  //   if(typeof localStorage !== 'undefined') {
-  //     return this.getRoles() && this.getToken();
-  //   }
-  //   else{
-  //     return null;
-  //   }
-  // }
-
-  getRoles(): string[] {
-    if (typeof localStorage !== 'undefined') {
-      const roles = localStorage.getItem('roles');
-      return roles ? JSON.parse(roles) : [];
-    }
-    return [];
-  }  
-
-  public isLoggedIn(): boolean {
-    if (typeof localStorage !== 'undefined') {
-      return !!localStorage.getItem('jwtToken') && this.getRoles().length > 0;
-    }
-    return false;
+  public isLoggedIn() {
+    return this.getRoles() && this.getToken();
   }
-  
+
+  public isAdmin(){
+    const roles: any[] = this.getRoles();
+    return roles[0].roleName === 'Admin';
+  }
+
+  public isUser(){
+    const roles: any[] = this.getRoles();
+    return roles[0].roleName === 'User';
+  }
 }

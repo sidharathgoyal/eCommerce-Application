@@ -1,44 +1,37 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserAuthService } from '../_services/user-auth.service';
-import { CommonModule } from '@angular/common';
 import { UserService } from '../_services/user.service';
 
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [RouterModule, CommonModule],
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.css'],
+    standalone: false
 })
 export class HeaderComponent implements OnInit {
-
   constructor(
-    public userAuthService: UserAuthService, 
+    private userAuthService: UserAuthService,
     private router: Router,
-    private cdRef: ChangeDetectorRef, // Inject ChangeDetectorRef
-    public  userService: UserService
+    public userService: UserService
   ) {}
 
-  ngOnInit(): void {
-    // Log to verify if ngOnInit is being triggered
+  ngOnInit(): void {}
+
+  public isLoggedIn() {
+    return this.userAuthService.isLoggedIn();
   }
 
-  // public isLoggedIn(): boolean {
-  //   // Ensure that the token is being checked
-  //   if(this.userAuthService.isLoggedIn() === null){
-  //     return false;
-  //   }
-  //   return true;
-  // }
-
-  public logout(){
+  public logout() {
     this.userAuthService.clear();
-    this.router.navigate(['/home']);
+    this.router.navigate(['/']);
   }
 
-  // Manually trigger change detection after login
-  public checkLoginState(): void {
-    this.cdRef.detectChanges();
+  public isAdmin(){
+    return this.userAuthService.isAdmin();
+  }
+
+  public isUser(){
+    return this.userAuthService.isUser();
   }
 }

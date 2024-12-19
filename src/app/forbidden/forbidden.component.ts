@@ -1,13 +1,16 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-forbidden',
-  standalone: true,
- imports: [RouterModule],
-  templateUrl: './forbidden.component.html',
-  styleUrl: './forbidden.component.css'
+    selector: 'app-forbidden',
+    templateUrl: './forbidden.component.html',
+    styleUrls: ['./forbidden.component.css'],
+    standalone: false
 })
-export class ForbiddenComponent {
+export class ForbiddenComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
 
 }
