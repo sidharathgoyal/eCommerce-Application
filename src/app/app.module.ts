@@ -23,6 +23,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddNewProductComponent } from './add-new-product/add-new-product.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { DragDirective } from './drag.directive';
+import { MatTableModule } from '@angular/material/table';
+import { ShowProductDetailsComponent } from './show-product-details/show-product-details.component';
+import {MatIconModule} from '@angular/material/icon';
+import { ProductImagesDialogComponent } from './product-images-dialog/product-images-dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -34,7 +39,9 @@ import { DragDirective } from './drag.directive';
     HeaderComponent,
     ForbiddenComponent, 
     AddNewProductComponent,
-    DragDirective
+    DragDirective,
+    ShowProductDetailsComponent,
+    ProductImagesDialogComponent
   ],
   bootstrap: [AppComponent],
   imports: [
@@ -47,8 +54,10 @@ import { DragDirective } from './drag.directive';
     MatFormFieldModule,
     MatInputModule,
     BrowserAnimationsModule,
-    MatGridListModule
-    
+    MatGridListModule,
+    MatTableModule,
+    MatIconModule,
+    MatDialogModule
   ], 
     providers: [
       AuthGuard,
