@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProductImagesDialogComponent } from '../product-images-dialog/product-images-dialog.component';
 import { ImageProcessingServiceService } from '../_services/image-processing-service.service';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -22,7 +23,8 @@ export class ShowProductDetailsComponent implements OnInit {
 
   constructor(private productService: ProductService,
     public imagesDialog: MatDialog, 
-    private imageProcessingService: ImageProcessingServiceService){}
+    private imageProcessingService: ImageProcessingServiceService,
+    private router: Router){}
 
   ngOnInit(): void {
     this.getAllProducts();
@@ -65,5 +67,9 @@ export class ShowProductDetailsComponent implements OnInit {
       height: '500px',
       width: '800px'
     });
+  }
+
+  editProductDetails(productId:any){
+    this.router.navigate(['/addNewProduct', {productId: productId} ]);
   }
 }
