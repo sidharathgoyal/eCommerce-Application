@@ -19,7 +19,7 @@ export class ShowProductDetailsComponent implements OnInit {
 
   productDetails: Product[] = [];
   displayedColumns: string[] = ['Id', 'Product Name', 'Product Description', 'Actual Price', 'Discounted Price',
-    'Images', 'Edit', 'Delete'];
+    'Actions'];
 
   constructor(private productService: ProductService,
     public imagesDialog: MatDialog, 

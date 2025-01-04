@@ -20,7 +20,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
     const token = this.userAuthService.getToken();
 
-    req = this.addToken(req, token);
+    if(token !== null){
+      req = this.addToken(req, token);
+    }
 
     return next.handle(req).pipe(
         catchError(
@@ -31,7 +33,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 } else if(err.status === 403) {
                     this.router.navigate(['/forbidden']);
                 }
-                return throwError("Some thing is wrong");
+                return throwError(() => new Error("Some thing is wrong"));
             }
         )
     );
