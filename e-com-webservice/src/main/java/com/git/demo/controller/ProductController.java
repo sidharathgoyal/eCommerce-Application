@@ -55,7 +55,6 @@ public class ProductController {
 		return imgModels;
 	}
 	
-	@PreAuthorize("hasRole('Admin')")
 	@GetMapping(value = {"/getAllProducts"})
 	public List<Product> getAllProducts(){
 		return productService.getAllProducts();

@@ -3,6 +3,7 @@ package com.git.demo.entity;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +21,7 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer productId;
 	private String productName;
+	@Column(length = 2000)
 	private String productDesc;
 	private Double prodActPrice;
 	private Double prodDisPrice;

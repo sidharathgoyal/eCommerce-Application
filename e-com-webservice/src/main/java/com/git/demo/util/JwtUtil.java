@@ -1,9 +1,13 @@
 package com.git.demo.util;
 
+import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
+import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -29,7 +33,10 @@ public class JwtUtil {
 	}
 	
 	private Claims getAllClaimsFromToken(String token) {
-		return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+		byte[] secretBytes = Base64.getDecoder().decode(secretKey);
+		Key key = new SecretKeySpec(secretBytes, 0, secretBytes.length, "HmacSHA256");
+		
+		return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
 	}
 	
 	public boolean validateToken(String token, UserDetails userDetails) {
@@ -49,9 +56,12 @@ public class JwtUtil {
 	public String generateToken(UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
 		
+		byte[] secretBytes = Base64.getDecoder().decode(secretKey); 
+	    Key signingKey = new SecretKeySpec(secretBytes, 0, secretBytes.length, "HmacSHA256");
+	    
 		return Jwts.builder().setClaims(claims).setSubject(userDetails.getUsername()).setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + TOKEN_VALIDITY * 1000))
-				.signWith(SignatureAlgorithm.HS512, secretKey).compact();
+				.signWith(signingKey, SignatureAlgorithm.HS512).compact();
 				
 	}
 }
