@@ -55,7 +55,7 @@ public class WebSecurityConfig{
 	                return config;
 	            }))
 	            .authorizeHttpRequests(auth -> auth
-	                    .requestMatchers("/authenticate", "/createNewRole", "/registerNewUser", "/getAllProducts").permitAll()
+	                    .requestMatchers("/authenticate", "/createNewRole", "/registerNewUser", "/getAllProducts", "/getProductDetailsById/{productId}").permitAll()
 	                    .anyRequest().authenticated()
 	            )
 	            .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthEntryPoint))
