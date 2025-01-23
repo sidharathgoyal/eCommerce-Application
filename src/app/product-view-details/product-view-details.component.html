@@ -1,15 +1,15 @@
-<div class="container mt-5">
+<div class="container mt-5" *ngIf="product">
     <div class="row">
         <div class="col-6"> 
 
             <div class="card image-conatiner p-3">
-                <img class="product-zoom-img" [src]="product.productImages[selectProdIndex].url">
+                <img class="product-zoom-img" *ngIf="product.productImages && product.productImages.length > selectProdIndex"  [src]="product.productImages[selectProdIndex].url">
             </div>
 
             <div class="mt-2">
-                <mat-grid-list cols="3" gutterSize="10" rowHeight="1:1">
+                <mat-grid-list cols="3" gutterSize="10" rowHeight="1:1" *ngIf="product.productImages && product.productImages.length">
                     <mat-grid-tile *ngFor="let file of product.productImages; let i=index;" (click)="changeIndex(i)" style="border: 1px solid lightgrey; cursor: pointer;">
-                        <img [src]="file.url" height="100px">
+                        <img [src]="file.url" height="100px" alt="Thumbnail">
                     </mat-grid-tile>
                 </mat-grid-list>
             </div>
@@ -30,9 +30,13 @@
                     <b style="text-decoration: line-through;">{{product.prodActPrice}}</b>
                 </div>
                 <div class="mt-5 text-center">
-                    <button type = "button" mat-raised-button color="warn" style="width: 200px;">Buy Now</button>
+                    <button type = "button" mat-raised-button color="warn" style="width: 200px;" (click)="buyProduct(product.productId)">Buy Now</button>
                 </div>
             </div>
         </div>
     </div>
-</div>"
+</div>
+
+<ng-template #loading>
+    <p>Loading product details...</p>
+</ng-template>
