@@ -22,6 +22,9 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
+	
+	public static String CURRENT_USER = "";
+	
 	@Autowired
 	private JwtUtil jwtUtil;
 	
@@ -47,6 +50,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			
 			try {
 				userName = jwtUtil.getUserNameFromToken(jwtToken);
+				CURRENT_USER = userName;
 			} catch(IllegalArgumentException e) {
 				System.out.println("Unable to get JWT token.");
 			} catch(ExpiredJwtException e) {

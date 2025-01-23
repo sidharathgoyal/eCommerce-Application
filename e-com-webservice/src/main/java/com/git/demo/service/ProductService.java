@@ -1,5 +1,6 @@
 package com.git.demo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,19 @@ public class ProductService {
 	
 	public Product getProductDetailsById(Integer productId) {
 		return productDao.findById(productId).get();
+	}
+	
+	public List<Product> getProductDetails(boolean isSingleProductCheckout, Integer productId) {
+		if(isSingleProductCheckout) {
+			List<Product> list = new ArrayList<>();
+			Product p = productDao.findById(productId).get();
+			list.add(p);
+			return list;
+		}
+		else {
+			
+		}
+		
+		return new ArrayList();
 	}
 }
